@@ -1,0 +1,397 @@
+ @import "tailwindcss";
+
+@layer base {
+  :root {
+    --foreground: 222.2 84% 4.9%;
+    --background: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%; /* blue-600 */
+    --secondary: 224.3 76.3% 48%; /* indigo-600 */
+    --accent: 262.1 83.3% 57.8%; /* violet-600 */
+  }
+
+  /* Reset & Base Styles */
+  *,
+  *::before,
+  *::after {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    scroll-padding-top: 80px; /* Fixed navbar offset */
+    font-size: 16px;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-100;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply scroll-m-20 font-bold leading-tight tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  p {
+    @apply leading-relaxed text-slate-300;
+  }
+
+  a {
+    @apply text-inherit no-underline transition-colors duration-200;
+  }
+
+  strong, b {
+    @apply font-semibold text-slate-200;
+  }
+
+  /* Code blocks */
+  code {
+    @apply font-mono text-sm bg-slate-800/50 px-1.5 py-0.5 rounded;
+  }
+
+  pre {
+    @apply font-mono text-sm bg-slate-800/50 p-4 rounded-lg overflow-x-auto;
+  }
+}
+
+@layer utilities {
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2.5 h-2.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-800/50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-blue-600 to-indigo-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gradient-to-b from-blue-500 to-indigo-500;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #1e293b;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-blue-500/30 text-white;
+  }
+
+  ::-moz-selection {
+    @apply bg-blue-500/30 text-white;
+  }
+
+  /* Focus States */
+  :focus-visible {
+    @apply outline-2 outline-blue-500 outline-offset-4 rounded;
+  }
+
+  /* Remove focus for mouse users */
+  :focus:not(:focus-visible) {
+    @apply outline-none;
+  }
+
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+  }
+
+  .text-gradient-primary {
+    background-image: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  }
+
+  .text-gradient-accent {
+    background-image: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+  }
+
+  /* Glass Effects */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Gradient Borders */
+  .border-gradient {
+    border: double 2px transparent;
+    background-image: 
+      linear-gradient(#0f172a, #0f172a),
+      linear-gradient(135deg, #3b82f6, #6366f1);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  /* Animation Classes */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulseSubtle 2s ease-in-out infinite;
+  }
+
+  /* Layout Utilities */
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  }
+
+  .container-padding {
+    padding-left: max(1.5rem, 5vw);
+    padding-right: max(1.5rem, 5vw);
+  }
+
+  /* Button Base */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 hover:shadow-xl hover:shadow-blue-500/30 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 hover:text-white hover:border-slate-600 active:scale-95;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+/* Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  body {
+    background: #0a0f1f;
+    color: #ffffff;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ffffff;
+  }
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1536px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  .text-gradient,
+  .text-gradient-primary,
+  .text-gradient-accent {
+    background-image: none !important;
+    -webkit-text-fill-color: black !important;
+    color: black !important;
+  }
+
+  nav,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+}
+
+/* Performance Optimizations */
+.hardware-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+img {
+  content-visibility: auto;
+}
+
+/* Custom utilities for portfolio components */
+.timeline-dot {
+  @apply w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500;
+  position: relative;
+}
+
+.timeline-dot::after {
+  content: '';
+  @apply absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-30;
+  animation: pulseSubtle 2s ease-in-out infinite;
+}
+
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300;
+}
+
+.card-hover:hover {
+  @apply -translate-y-2 shadow-2xl shadow-blue-500/10;
+}
+
+/* Gradient shadow */
+.glow-shadow {
+  box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.2),
+    0 0 40px rgba(99, 102, 241, 0.1);
+}
+
+.hover-glow-shadow:hover {
+  box-shadow: 
+    0 0 30px rgba(59, 130, 246, 0.3),
+    0 0 60px rgba(99, 102, 241, 0.2);
+} */

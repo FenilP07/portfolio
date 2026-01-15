@@ -1,0 +1,75 @@
+export const HERO_CONFIG = {
+  particles: {
+    count: 100,
+    speedMultiplier: 0.01,
+    mouseInfluence: 0.005,
+    mouseRange: 3,
+    rotationSpeed: 0.002,
+  },
+  camera: {
+    fov: 75,
+    near: 0.1,
+    far: 1000,
+    positionZ: 5,
+    mouseMultiplier: 0.2,
+    smoothness: 0.03,
+  },
+  animation: {
+    stagger: {
+      title: 0.1,
+      cta: 0.15,
+    },
+    duration: {
+      title: 1.2,
+      subtitle: 1,
+      cta: 0.8,
+    },
+  },
+  parallax: {
+    layer1: -20,
+    layer2: -35,
+    layer3: -50,
+  },
+};
+
+export const CODE_SNIPPETS = [
+  "Postgres",
+  "Zest",
+  "[ ]",
+  "Java",
+  "=>",
+  "SpringBoot",
+  "!==",
+  "&&",
+  "||",
+  "TypeScript",
+  "if",
+  "const",
+  "let",
+  "Postman",
+  "NodeJs",
+  "React",
+  "0",
+  "1",
+  "01",
+  "10",
+  "101",
+  "Redis",
+  "MongoDB",
+  "001",
+  "JS",
+  "TS",
+  "CSS",
+  "API",
+  "UI",
+  "UX",
+];
+
+export const TECH_STACK = [
+  "React",
+  "TypeScript",
+  "Next.js",
+  "Node.js",
+  "Tailwind CSS",
+  "MongoDB",
+];
