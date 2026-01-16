@@ -5,9 +5,6 @@ import { BackgroundLayers } from "./Hero/BackgroundLayers";
 import { HeroTitle } from "./Hero/HeroTitle";
 import { HeroSubtitle } from "./Hero/HeroSubtitle";
 import { CTASection } from "./Hero/CTASection";
-import { TechStack } from "./Hero/TechStack";
-import { ScrollIndicator } from "./Hero/ScrollIndicator";
-import AmbientLightOrbs from "./Hero/AmbientlightOrbs";
 import AnimatedGridOverlay from "./Hero/AnimatedGridOverlay";
 
 const Hero = () => {
@@ -36,36 +33,54 @@ const Hero = () => {
     <section
       id="hero"
       ref={containerRef}
-      className="relative flex items-center justify-center overflow-hidden text-center px-4 sm:px-6"
+      className="
+        relative flex items-center justify-center
+        overflow-hidden text-center
+        px-4 sm:px-6
+      "
       style={{
         height: "100vh",
         minHeight: "100dvh",
-        maxHeight: "100vh",
+        // 🎨 NEW: Ambient light that follows mouse
+        background: `
+          radial-gradient(
+            800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(99, 102, 241, 0.15),
+            transparent 40%
+          ),
+          linear-gradient(to bottom, #0f172a, #1e1b4b)
+        `,
+        // Initialize CSS variables
+        "--mouse-x": "50%",
+        "--mouse-y": "50%"
       }}
     >
-      {/* <AmbientLightOrbs /> */}
+      {/* Background */}
       <BackgroundLayers refs={bgRefs} />
       <AnimatedGridOverlay />
 
+      {/* Three.js canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-[1]"
         style={{ pointerEvents: "none" }}
       />
+
+      {/* Content */}
       <div
-        className="relative z-10 w-full max-w-3xl mx-auto px-6 py-10
-                rounded-2xl backdrop-blur-md
-                bg-white/5 border border-white/10
-                shadow-[0_0_60px_rgba(0,0,0,0.1)]
-                space-y-6"
+        className="
+          relative z-10
+          w-full max-w-4xl mx-auto
+          flex flex-col items-center
+          gap-6 sm:gap-8
+        "
       >
         <HeroTitle titleRef={titleRef} />
-        <HeroSubtitle subtitleRef={subtitleRef} />
-        <CTASection ctaRef={ctaRef} />
-        {/* <TechStack /> */}
-      </div>
 
-      <ScrollIndicator />
+        <HeroSubtitle subtitleRef={subtitleRef} />
+
+        <CTASection ctaRef={ctaRef} />
+      </div>
     </section>
   );
 };

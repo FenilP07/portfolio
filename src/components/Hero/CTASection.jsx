@@ -1,14 +1,37 @@
 import { CTAButton } from "./CTAButton";
+import { useState } from "react";
+
 export const CTASection = ({ ctaRef }) => {
+  const [themeShift, setThemeShift] = useState(0);
+
+  const themeColors = [
+    "from-purple-500 to-pink-500",
+    "from-blue-400 to-green-400",
+    "from-red-500 to-yellow-400",
+    "from-indigo-600 to-purple-400",
+    "from-teal-400 to-cyan-400",
+    "from-orange-500 to-red-500",
+  ];
+
+  const handleClick = () => {
+    setThemeShift((themeShift + 1) % themeColors.length);
+  };
+
   return (
-    <div ref={ctaRef} className="px-4">
-      <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center relative z-20">
+    <div ref={ctaRef} className="px-4 relative z-20">
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
         <CTAButton
           href="#projects"
           variant="primary"
+          className={`group bg-gradient-to-r ${themeColors[themeShift]} 
+                      shadow-[0_0_40px_rgba(255,255,255,0.2)] 
+                      hover:shadow-[0_0_80px_rgba(255,255,255,0.5)] 
+                      transition-all duration-500 transform hover:scale-105 hover:rotate-[1deg]`}
+          onClick={handleClick}
           icon={
             <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 sm:ml-3 relative z-10 transition-transform duration-300 group-hover:translate-x-1"
+              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 sm:ml-3 relative z-10 
+                         transition-transform duration-300 group-hover:translate-x-2 group-hover:rotate-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -23,28 +46,6 @@ export const CTASection = ({ ctaRef }) => {
           }
         >
           View My Work
-        </CTAButton>
-
-        <CTAButton
-          href="#contact"
-          variant="secondary"
-          icon={
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 sm:ml-3 relative z-10 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-          }
-        >
-          Schedule Consultation
         </CTAButton>
       </div>
     </div>

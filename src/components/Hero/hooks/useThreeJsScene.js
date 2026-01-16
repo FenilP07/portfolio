@@ -47,10 +47,21 @@ export const useThreeJsScene = (canvasRef) => {
         CODE_SNIPPETS[Math.floor(Math.random() * CODE_SNIPPETS.length)];
       const texture = createTextTexture(randomText);
       const particle = createParticle(texture, position);
-
+      
+      // 🎨 NEW: Add glow phase for pulsing effect
+      particle.userData.glowPhase = Math.random() * Math.PI * 2;
+      
       scene.add(particle);
       particles.push(particle);
     }
+
+    // 🎨 NEW: Line material for particle connections
+    const lineMaterial = new THREE.LineBasicMaterial({ 
+      color: 0x6366f1, // matches your blue accent
+      transparent: true, 
+      opacity: 0.15 
+    });
+    const lineSegments = [];
 
     // Mouse tracking
     const mouse = { x: 0, y: 0 };
@@ -64,6 +75,13 @@ export const useThreeJsScene = (canvasRef) => {
     let animationId;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
+
+      // 🎨 NEW: Clear old connection lines
+      lineSegments.forEach(line => {
+        line.geometry.dispose();
+        scene.remove(line);
+      });
+      lineSegments.length = 0;
 
       particles.forEach((particle, i) => {
         // Apply velocity
@@ -88,6 +106,26 @@ export const useThreeJsScene = (canvasRef) => {
 
         // Rotation
         particle.material.rotation += HERO_CONFIG.particles.rotationSpeed;
+
+        // 🎨 NEW: Subtle glow pulse
+        particle.userData.glowPhase += 0.015;
+        const glowIntensity = 0.45 + Math.sin(particle.userData.glowPhase) * 0.25;
+        particle.material.opacity = glowIntensity * 0.5;
+
+        // 🎨 NEW: Draw connection lines between nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const dist = particle.position.distanceTo(particles[j].position);
+          if (dist < 3.5) {
+            const geometry = new THREE.BufferGeometry().setFromPoints([
+              particle.position,
+              particles[j].position
+            ]);
+            const line = new THREE.Line(geometry, lineMaterial.clone());
+            line.material.opacity = (1 - dist / 3.5) * 0.25;
+            scene.add(line);
+            lineSegments.push(line);
+          }
+        }
       });
 
       // Camera movement
@@ -116,6 +154,11 @@ export const useThreeJsScene = (canvasRef) => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
+
+      lineSegments.forEach(line => {
+        line.geometry.dispose();
+        scene.remove(line);
+      });
 
       particles.forEach((particle) => {
         if (particle.material.map) particle.material.map.dispose();
