@@ -27,7 +27,12 @@ const Logo = () => {
     setTilt({ x: 0, y: 0 });
   };
 
-  const createExplosion = () => {
+  const createExplosion = (e) => {
+    // Get the position of the logo button
+    const rect = e.currentTarget.getBoundingClientRect();
+    const logoX = rect.left + rect.width / 2;
+    const logoY = rect.top + rect.height / 2;
+
     // Create explosion sound effect
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     
@@ -80,8 +85,8 @@ const Logo = () => {
       
       newParticles.push({
         id: Math.random(),
-        x: 0,
-        y: 0,
+        x: logoX,
+        y: logoY,
         vx: Math.cos(angle) * velocity,
         vy: Math.sin(angle) * velocity,
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -146,8 +151,8 @@ const Logo = () => {
             key={p.id}
             style={{
               position: "absolute",
-              left: "50%",
-              top: "20px",
+              left: 0,
+              top: 0,
               width: `${p.size}px`,
               height: `${p.size}px`,
               background: p.shape === 'circle' 
@@ -169,7 +174,7 @@ const Logo = () => {
         className="navbar-logo"
         onClick={(e) => {
           e.preventDefault();
-          createExplosion();
+          createExplosion(e);
         }}
         style={{
           display: "flex",
