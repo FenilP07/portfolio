@@ -1,3 +1,4 @@
+// CTASection.jsx
 import { CTAButton } from "./CTAButton";
 import { useState } from "react";
 
@@ -23,15 +24,11 @@ export const CTASection = ({ ctaRef }) => {
         <CTAButton
           href="#projects"
           variant="primary"
-          className={`group bg-gradient-to-r ${themeColors[themeShift]} 
-                      shadow-[0_0_40px_rgba(255,255,255,0.2)] 
-                      hover:shadow-[0_0_80px_rgba(255,255,255,0.5)] 
-                      transition-all duration-500 transform hover:scale-105 hover:rotate-[1deg]`}
           onClick={handleClick}
+          className={`bg-gradient-to-r ${themeColors[themeShift]} shadow-lg`}
           icon={
             <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 sm:ml-3 relative z-10 
-                         transition-transform duration-300 group-hover:translate-x-2 group-hover:rotate-12"
+              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 sm:ml-3 relative z-10 transition-transform duration-500 ease-in-out group-hover:translate-x-2 group-hover:rotate-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

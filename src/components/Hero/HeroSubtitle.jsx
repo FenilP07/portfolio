@@ -8,7 +8,7 @@ export const HeroSubtitle = ({ subtitleRef }) => {
                    leading-relaxed
                    max-w-2xl mx-auto"
       >
-        I deliver production-grade applications with meticulous attention to detail—where 
+        I deliver production-grade applications with meticulous attention to detail, Where 
         clean architecture meets measurable performance gains.
       </p>
 
@@ -17,7 +17,7 @@ export const HeroSubtitle = ({ subtitleRef }) => {
                    text-slate-400
                    max-w-xl mx-auto"
       >
-        Expert in React, TypeScript, and scalable system design. Building enterprise 
+        Expert in React, JavaScript, and scalable system design. Building enterprise 
         solutions that perform under pressure and scale with your business.
       </p>
     </div>

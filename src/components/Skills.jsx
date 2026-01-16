@@ -53,35 +53,75 @@ const stats = [
 // Animated Skill Bar Component
 const SkillBar = ({ name, level, gradient, delay }) => {
   const barRef = useRef(null);
+  const shimmerRef = useRef(null);
+  const percentRef = useRef(null);
   const isInView = useInView(barRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (isInView && barRef.current) {
-      gsap.fromTo(
+      const tl = gsap.timeline();
+      
+      // Animate the bar fill
+      tl.fromTo(
         barRef.current,
-        { width: '0%' },
+        { width: '0%', opacity: 0 },
         {
           width: `${level}%`,
-          duration: 1.2,
+          opacity: 1,
+          duration: 1.5,
           delay: delay,
-          ease: 'power3.out'
+          ease: 'power4.out'
         }
+      );
+
+      // Animate percentage counter
+      tl.fromTo(
+        percentRef.current,
+        { textContent: 0 },
+        {
+          textContent: level,
+          duration: 1.5,
+          snap: { textContent: 1 },
+          ease: 'power2.out'
+        },
+        delay
+      );
+
+      // Shimmer effect after bar fills
+      tl.fromTo(
+        shimmerRef.current,
+        { x: '-100%' },
+        {
+          x: '200%',
+          duration: 1,
+          ease: 'power2.inOut'
+        },
+        delay + 1.2
       );
     }
   }, [isInView, level, delay]);
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-slate-300 font-medium text-sm">{name}</span>
-        <span className="text-slate-500 text-xs font-semibold">{level}%</span>
+    <div className="group">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-slate-200 font-medium text-sm tracking-wide">{name}</span>
+        <span className="text-slate-400 text-sm font-bold tabular-nums">
+          <span ref={percentRef}>0</span>%
+        </span>
       </div>
-      <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+      <div className="h-2.5 bg-slate-800/80 rounded-full overflow-hidden relative shadow-inner">
         <div
           ref={barRef}
-          className={`h-full bg-gradient-to-r ${gradient} rounded-full`}
+          className={`h-full bg-gradient-to-r ${gradient} rounded-full relative shadow-lg`}
           style={{ width: '0%' }}
-        />
+        >
+          {/* Shimmer overlay */}
+          <div
+            ref={shimmerRef}
+            className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            style={{ transform: 'translateX(-100%)' }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -92,20 +132,29 @@ const Skills = () => {
   const circleRef2 = useRef(null);
 
   useEffect(() => {
-    // GSAP floating animation for background circles
-    gsap.to(circleRef1.current, {
-      y: 30,
-      x: 20,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
+    // GSAP floating animation for background circles with stagger
+    const tl = gsap.timeline({ repeat: -1 });
+    
+    tl.to(circleRef1.current, {
+      y: 40,
+      x: 30,
+      scale: 1.1,
+      duration: 6,
+      ease: 'sine.inOut'
+    })
+    .to(circleRef1.current, {
+      y: 0,
+      x: 0,
+      scale: 1,
+      duration: 6,
       ease: 'sine.inOut'
     });
 
     gsap.to(circleRef2.current, {
-      y: -30,
-      x: -20,
-      duration: 5,
+      y: -40,
+      x: -30,
+      scale: 1.15,
+      duration: 7,
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut'
@@ -123,13 +172,14 @@ const Skills = () => {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 60, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1]
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
@@ -137,14 +187,14 @@ const Skills = () => {
   return (
     <section id="skills" className="relative py-24 px-6 bg-slate-900 overflow-hidden">
       {/* Background Circles - Animated with GSAP */}
-      <div className="absolute inset-0 opacity-15 pointer-events-none">
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div
           ref={circleRef1}
-          className="absolute top-1/3 right-1/4 w-72 h-72 bg-blue-500/30 rounded-full blur-2xl"
+          className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/40 rounded-full blur-3xl"
         />
         <div
           ref={circleRef2}
-          className="absolute bottom-1/3 left-1/4 w-72 h-72 bg-purple-500/30 rounded-full blur-2xl"
+          className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/40 rounded-full blur-3xl"
         />
       </div>
 
@@ -186,19 +236,25 @@ const Skills = () => {
           {skillCategories.map(({ title, icon: Icon, gradient, skills }, i) => (
             <motion.div
               key={i}
-              className="relative group bg-slate-800/50 backdrop-blur-xl p-6 rounded-2xl border border-slate-700/50 overflow-hidden transition hover:shadow-lg hover:border-slate-600/80"
+              className="relative group bg-slate-800/40 backdrop-blur-xl p-6 rounded-2xl border border-slate-700/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-slate-600/80"
               variants={cardVariants}
               whileHover={{
-                y: -5,
-                transition: { duration: 0.3 }
+                y: -8,
+                transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
               }}
             >
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
               {/* Header */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6 relative z-10">
                 <motion.div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-md`}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}
+                  whileHover={{ 
+                    rotate: [0, -10, 10, -10, 0],
+                    scale: 1.1
+                  }}
+                  transition={{ duration: 0.5 }}
                 >
                   <Icon size={24} className="text-white" />
                 </motion.div>
@@ -206,14 +262,14 @@ const Skills = () => {
               </div>
 
               {/* Skills List - Animated with GSAP */}
-              <div className="space-y-4">
+              <div className="space-y-4 relative z-10">
                 {skills.map(({ name, level }, j) => (
                   <SkillBar
                     key={j}
                     name={name}
                     level={level}
                     gradient={gradient}
-                    delay={j * 0.1}
+                    delay={j * 0.08}
                   />
                 ))}
               </div>
@@ -224,28 +280,34 @@ const Skills = () => {
         {/* Bottom Stats */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           {stats.map(({ number, label }, i) => (
             <motion.div
               key={i}
-              className="text-center p-4 rounded-xl bg-slate-800/30 backdrop-blur-sm border border-slate-700/30 hover:border-slate-600/50 transition-transform duration-300"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              className="relative group text-center p-6 rounded-xl bg-slate-800/30 backdrop-blur-sm border border-slate-700/30 hover:border-blue-500/40 transition-all duration-500 overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.4 + (i * 0.1), duration: 0.4 }}
+              transition={{ delay: 0.3 + (i * 0.1), duration: 0.5 }}
               whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 }
+                scale: 1.08,
+                y: -4,
+                transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
               }}
             >
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-1">
-                {number}
+              {/* Hover gradient effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative z-10">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                  {number}
+                </div>
+                <div className="text-slate-400 text-xs md:text-sm font-medium uppercase tracking-wider">{label}</div>
               </div>
-              <div className="text-slate-400 text-xs md:text-sm font-medium">{label}</div>
             </motion.div>
           ))}
         </motion.div>
