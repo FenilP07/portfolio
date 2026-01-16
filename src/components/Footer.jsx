@@ -36,9 +36,9 @@ const Footer = () => {
   ];
 
   const professionalLinks = [
-    { icon: Github, href: 'https://github.com/YOUR_USERNAME', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/YOUR_PROFILE', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:contact@yourdomain.com', label: 'Email' },
+    { icon: Github, href: 'https://github.com/FenilP07', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/fenil07', label: 'LinkedIn' },
+    { icon: Mail, href: 'fenilpatel.1111@gmail.com', label: 'Email' },
     { icon: FileText, href: '/resume.pdf', label: 'Resume' },
   ];
 

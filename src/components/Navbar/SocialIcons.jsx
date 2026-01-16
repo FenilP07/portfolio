@@ -10,7 +10,7 @@ const SocialIcons = forwardRef(({ size = 18 }, ref) => {
           if (!ref?.current) return;
           ref.current[0] = el;
         }}
-        href="https://github.com/YOUR_USERNAME"
+        href="https://github.com/FenilP07"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon group p-2.5 rounded-lg hover:bg-white/5 transition-all duration-300"
@@ -28,7 +28,7 @@ const SocialIcons = forwardRef(({ size = 18 }, ref) => {
           if (!ref?.current) return;
           ref.current[1] = el;
         }}
-        href="https://linkedin.com/in/YOUR_PROFILE"
+        href="https://www.linkedin.com/in/fenil07"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon group p-2.5 rounded-lg hover:bg-white/5 transition-all duration-300"

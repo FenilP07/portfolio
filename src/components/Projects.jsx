@@ -13,14 +13,14 @@ import gsap from "gsap";
 ========================= */
 const PROJECTS = [
   {
-    title: "Enterprise Dashboard",
+    title: "VibeRadius",
     category: "Web Application",
     desc: "A comprehensive analytics dashboard for monitoring business KPIs with real-time data visualization and interactive reporting features.",
     tags: ["React", "TypeScript", "Recharts", "Tailwind CSS", "REST API"],
     status: "Live",
     gradient: "from-blue-600 to-cyan-500",
-    liveLink: "#",
-    githubLink: "#",
+    liveLink: "vibe-radius.vercel.app",
+    githubLink: "https://github.com/FenilP07/VibeRadius",
     metrics: "95% Lighthouse score, 40% faster load time",
   },
   {
@@ -30,8 +30,8 @@ const PROJECTS = [
     tags: ["Next.js", "Node.js", "MongoDB", "Stripe", "Redux"],
     status: "Live",
     gradient: "from-indigo-600 to-purple-600",
-    liveLink: "#",
-    githubLink: "#",
+    liveLink: null,
+    githubLink: "https://github.com/FenilP07/content-management-system",
     metrics: "3k+ monthly users, 98% uptime",
   },
   {
@@ -41,8 +41,8 @@ const PROJECTS = [
     tags: ["React", "Chart.js", "Python", "Machine Learning", "Firebase"],
     status: "In Progress",
     gradient: "from-emerald-600 to-teal-500",
-    liveLink: null,
-    githubLink: "#",
+    liveLink: "wil-ecru.vercel.app",
+    githubLink: "https://github.com/FenilP07/OneAuction",
     metrics: "90% accuracy in predictions",
   },
 ];
