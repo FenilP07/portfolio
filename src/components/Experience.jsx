@@ -14,48 +14,44 @@ import gsap from "gsap";
 ========================= */
 const EXPERIENCES = [
   {
-    title: "Frontend Developer",
-    role: "Web Development Intern",
-    period: "June – August 2025",
-    company: "Tech Solutions Inc.",
+    title: "Full Stack Developer / Team Lead",
+    role: "Work Term · Industry Project",
+    period: "January – April 2025",
+    company: "Industry Capstone – OneAuction",
     companyUrl: "#",
-    location: "Toronto, ON (Remote)",
+    location: "Toronto, ON",
+    liveLink: "https://oneauctionfronend.vercel.app",
+    githubLink: "https://github.com/FenilP07/OneAuction",
     points: [
-      "Developed responsive React applications with TypeScript and Tailwind CSS, improving user engagement by 25%",
-      "Implemented reusable component libraries and design systems that reduced development time by 30%",
-      "Collaborated with cross-functional teams in Agile environment to deliver features on 2-week sprint cycles",
-      "Optimized application performance, achieving Lighthouse scores of 95+ for core web vitals",
-    ],
-    tags: ["React", "TypeScript", "Tailwind CSS", "Git", "Agile", "Figma"],
-  },
-  {
-    title: "Freelance Developer",
-    role: "Full-Stack Developer",
-    period: "January 2024 – Present",
-    company: "Independent Contractor",
-    companyUrl: "#",
-    location: "Greater Toronto Area",
-    points: [
-      "Designed and developed 8+ custom web applications for small businesses",
-      "Managed full project lifecycle from requirements to deployment",
-      "Built client portals using Next.js and Supabase",
-      "Improved performance by 40% through optimization",
+      "Led a team of 4 developers in an industry-simulated Agile environment, coordinating sprint planning, task assignment, and progress tracking using Jira",
+      "Built a full-stack auction platform supporting three auction models: single timed auctions, real-time session-based auctions using Socket.IO, and sealed-bid auctions",
+      "Designed and implemented real-time bidding flows and auction state synchronization with WebSockets to ensure consistent low-latency updates",
+      "Developed scalable REST APIs and backend validation logic using Node.js, Express, and MongoDB for auctions, bids, and access control",
+      "Used Zustand for frontend state management to handle auction state, real-time updates, and session flow",
+      "Reviewed pull requests, enforced coding standards, and resolved merge conflicts through Git-based collaboration",
+      "Presented sprint demos and architecture walkthroughs to instructors and stakeholders, explaining system design decisions and trade-offs",
     ],
     tags: [
-      "Next.js",
+      "MERN Stack",
+      "React",
       "Node.js",
+      "Express.js",
       "MongoDB",
-      "UI/UX",
-      "Project Management",
+      "Socket.IO",
+      "Zustand",
+      "Jira",
+      "Agile / Scrum",
+      "Team Leadership",
+      "Git & Code Reviews",
     ],
   },
 ];
 
 /* =========================
-   SMALL HELPERS (same file)
+   HELPERS
 ========================= */
 const InfoBadge = ({ icon, text }) => (
-  <span className="flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg">
+  <span className="flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg transition-colors duration-200 hover:bg-slate-800/80">
     {icon}
     {text}
   </span>
@@ -65,16 +61,16 @@ const ToggleButton = ({ isOpen, onClick }) => (
   <motion.button
     onClick={onClick}
     aria-label={isOpen ? "Collapse details" : "Expand details"}
-    className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300
+    className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200
       ${
         isOpen
-          ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
-          : "bg-slate-700/50 text-slate-400 hover:text-white"
+          ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
+          : "bg-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700"
       }`}
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     animate={{ rotate: isOpen ? 180 : 0 }}
-    transition={{ duration: 0.3 }}
+    transition={{ duration: 0.2, ease: "easeOut" }}
   >
     <ChevronRight size={20} />
   </motion.button>
@@ -89,23 +85,22 @@ const Experience = () => {
   const glowRef2 = useRef(null);
 
   useEffect(() => {
-    // GSAP floating animation for background glows
     gsap.to(glowRef1.current, {
-      x: 30,
-      y: -30,
-      duration: 5,
+      x: 25,
+      y: -25,
+      duration: 7,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut"
+      ease: "sine.inOut",
     });
 
     gsap.to(glowRef2.current, {
-      x: -30,
-      y: 30,
-      duration: 6,
+      x: -25,
+      y: 25,
+      duration: 8,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut"
+      ease: "sine.inOut",
     });
   }, []);
 
@@ -113,23 +108,17 @@ const Experience = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+      transition: { staggerChildren: 0.15, delayChildren: 0.05 },
+    },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   return (
@@ -137,15 +126,15 @@ const Experience = () => {
       id="experience"
       className="relative py-32 px-6 bg-gradient-to-b from-slate-900 to-slate-950 overflow-hidden"
     >
-      {/* Background glow - Animated with GSAP */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Background glows */}
+      <div className="absolute inset-0 pointer-events-none opacity-50">
         <div
           ref={glowRef1}
-          className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
+          className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"
         />
         <div
           ref={glowRef2}
-          className="absolute bottom-1/4 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"
+          className="absolute bottom-1/4 -right-20 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"
         />
       </div>
 
@@ -153,17 +142,17 @@ const Experience = () => {
         {/* Header */}
         <motion.header
           className="text-center mb-20"
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
           <motion.div
             className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6"
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.4 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             <Briefcase size={18} className="text-blue-400" />
             <span className="text-sm text-blue-300 uppercase tracking-wider">
@@ -174,7 +163,6 @@ const Experience = () => {
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
             Work Experience
           </h2>
-
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             Building scalable solutions and impactful products
           </p>
@@ -194,23 +182,19 @@ const Experience = () => {
             return (
               <motion.div
                 key={index}
-                className="bg-slate-800/40 backdrop-blur-xl rounded-xl border border-slate-700/50 hover:border-blue-500/30 transition-all"
+                className="bg-slate-800/40 backdrop-blur-xl rounded-xl border border-slate-700/50 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/5"
                 variants={cardVariants}
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.3 }
-                }}
               >
                 <div className="p-8">
                   {/* Top */}
                   <div className="flex justify-between items-start gap-6 mb-6">
-                    <div>
+                    <div className="flex-1">
                       <motion.div
-                        className="flex items-center gap-3 mb-2"
-                        initial={{ opacity: 0, x: -20 }}
+                        className="flex items-center gap-3 mb-2 flex-wrap"
+                        initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
+                        transition={{ delay: 0.1, duration: 0.4 }}
                       >
                         <h3 className="text-2xl font-bold text-white">
                           {exp.title}
@@ -222,12 +206,15 @@ const Experience = () => {
 
                       <motion.a
                         href={exp.companyUrl}
-                        className="flex items-center gap-2 text-lg font-semibold text-blue-400 hover:text-blue-300"
-                        whileHover={{ x: 5 }}
+                        className="inline-flex items-center gap-2 text-lg font-semibold text-blue-400 hover:text-blue-300 transition-all duration-200 group"
+                        whileHover={{ x: 3 }}
                         transition={{ duration: 0.2 }}
                       >
                         {exp.company}
-                        <ExternalLink size={14} />
+                        <ExternalLink
+                          size={14}
+                          className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        />
                       </motion.a>
 
                       <div className="flex flex-wrap gap-4 mt-4 text-sm text-slate-400">
@@ -248,14 +235,18 @@ const Experience = () => {
                     />
                   </div>
 
-                  {/* Expand with AnimatePresence */}
-                  <AnimatePresence>
+                  {/* Expand */}
+                  <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{
+                          duration: 0.25,
+                          ease: [0.22, 1, 0.36, 1],
+                          opacity: { duration: 0.2 },
+                        }}
                         className="overflow-hidden"
                       >
                         <div className="pt-6 border-t border-slate-700/50">
@@ -264,34 +255,39 @@ const Experience = () => {
                           </h4>
 
                           <motion.ul
-                            className="space-y-4 mb-8"
+                            className="space-y-4 mb-6"
                             initial="hidden"
                             animate="visible"
                             variants={{
                               visible: {
-                                transition: {
-                                  staggerChildren: 0.1
-                                }
-                              }
+                                transition: { staggerChildren: 0.06 },
+                              },
                             }}
                           >
                             {exp.points.map((point, i) => (
                               <motion.li
                                 key={i}
-                                className="flex gap-3 text-slate-300"
+                                className="flex gap-3 text-slate-300 leading-relaxed"
                                 variants={{
-                                  hidden: { opacity: 0, x: -20 },
-                                  visible: { opacity: 1, x: 0 }
+                                  hidden: { opacity: 0, x: -10 },
+                                  visible: {
+                                    opacity: 1,
+                                    x: 0,
+                                    transition: {
+                                      duration: 0.3,
+                                      ease: "easeOut",
+                                    },
+                                  },
                                 }}
                               >
-                                <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400" />
+                                <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 flex-shrink-0" />
                                 {point}
                               </motion.li>
                             ))}
                           </motion.ul>
 
                           <div>
-                            <h4 className="text-sm text-slate-400 mb-3">
+                            <h4 className="text-sm text-slate-400 mb-3 font-medium">
                               Technologies & Skills
                             </h4>
                             <motion.div
@@ -300,27 +296,61 @@ const Experience = () => {
                               animate="visible"
                               variants={{
                                 visible: {
-                                  transition: {
-                                    staggerChildren: 0.05
-                                  }
-                                }
+                                  transition: { staggerChildren: 0.04 },
+                                },
                               }}
                             >
-                              {exp.tags.map(tag => (
+                              {exp.tags.map((tag) => (
                                 <motion.span
                                   key={tag}
-                                  className="px-3 py-1.5 text-sm rounded-lg bg-slate-800/70 border border-slate-700/50"
+                                  className="px-3 py-1.5 text-sm rounded-lg bg-slate-800/70 border border-slate-700/50 text-slate-200 hover:border-slate-600 hover:bg-slate-800 transition-all duration-200 cursor-default"
                                   variants={{
-                                    hidden: { opacity: 0, scale: 0.8 },
-                                    visible: { opacity: 1, scale: 1 }
+                                    hidden: { opacity: 0, scale: 0.9 },
+                                    visible: {
+                                      opacity: 1,
+                                      scale: 1,
+                                      transition: { duration: 0.2 },
+                                    },
                                   }}
-                                  whileHover={{ scale: 1.05 }}
+                                  whileHover={{
+                                    scale: 1.05,
+                                    y: -2,
+                                    transition: { duration: 0.15 },
+                                  }}
                                 >
                                   {tag}
                                 </motion.span>
                               ))}
                             </motion.div>
                           </div>
+
+                          {/* Live & GitHub Links */}
+                          {(exp.liveLink || exp.githubLink) && (
+                            <div className="flex flex-wrap gap-3 mt-6">
+                              {/* {exp.liveLink && (
+                                <a
+                                  href={exp.liveLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                                >
+                                  <ExternalLink size={16} />
+                                  Live Demo
+                                </a>
+                              )} */}
+                              {exp.githubLink && (
+                                <a
+                                  href={exp.githubLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold border border-slate-700/50 bg-slate-800/50 text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-800 hover:-translate-y-0.5 transition-all duration-200"
+                                >
+                                  <ExternalLink size={16} />
+                                  GitHub
+                                </a>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     )}
